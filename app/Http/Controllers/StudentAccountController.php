@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
-use App\Models\Program; // Import the Program model
+use App\Models\Program; 
 
 class StudentAccountController extends Controller
 {
     public function index()
     {
         $students = Student::all();
-        $schools = \App\Models\School::all(); // Fetch all schools
+        $schools = \App\Models\School::all(); 
         return view('admin.student_account', compact('students', 'schools'));
     }
 
@@ -58,7 +58,6 @@ class StudentAccountController extends Controller
     {
     $student = Student::findOrFail($id);
     
-    // Toggle status based on request
     if ($request->status === 'Activated' || $request->status === 'Disabled') {
         $student->status = $request->status;
         $student->save();
