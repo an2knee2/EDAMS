@@ -77,8 +77,8 @@
                         @foreach($schools as $index => $school)
                             <tr class="border-b">
                                 <td scope="row" class="px-4 py-3 text-gray-700 whitespace-nowrap">{{ $index + 1 }}.</td>
-                                <td class="px-4 py-3 font-medium text-gray-700 whitespace-nowrap">{{ $school->school_name }}</td>
-                                <td class="px-4 py-3 font-medium text-gray-700 whitespace-nowrap">{{ $school->abbreviation }}</td>
+                                <td class="px-4 py-3 text-gray-700 whitespace-nowrap">{{ $school->school_name }}</td>
+                                <td class="px-4 py-3 text-gray-700 whitespace-nowrap">{{ $school->abbreviation }}</td>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="editation-dropdown-button-{{ $school->id }}" data-dropdown-toggle="editation-dropdown-{{ $school->id }}" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none" type="button">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

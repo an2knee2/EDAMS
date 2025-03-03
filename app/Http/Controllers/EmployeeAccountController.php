@@ -9,7 +9,7 @@ class EmployeeAccountController extends Controller
 {
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::all(); // Retrieves all records from the 'employees' table
         return view('admin.employee_account', compact('employees'));
     }
 
@@ -42,21 +42,20 @@ class EmployeeAccountController extends Controller
     }
 
     public function updateStatus(Request $request, $id)
-        {
-            $employee = Employee::findOrFail($id);
+    {
+        $request->validate([
+            'status' => 'required|in:Activated,Disabled',
+        ]);
 
-            if ($request->status === 'Activated' || $request->status === 'Disabled') {
-                $employee->status = $request->status;
-                $employee->save();
-        
-                return response()->json([
-                    'success' => true,
-                    'message' => "Student status updated to {$request->status}",
-                    'new_status' => $employee->status
-                ]);
-            }
-        
-            return response()->json(['success' => false, 'message' => 'Invalid status'], 400);
-            }
+        $employee = Employee::findOrFail($id);
+        $employee->status = $request->status;
+        $employee->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Employee status updated to {$request->status}",
+            'new_status' => $employee->status
+        ]);
+    }
 }
 

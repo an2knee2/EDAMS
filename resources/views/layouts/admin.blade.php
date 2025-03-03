@@ -40,7 +40,7 @@
             </div>
             <ul class="py-1" role="none">
                 <li>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                    <a href="{{ url('/admin/settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
                 </li>
                 <li>
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
@@ -73,19 +73,19 @@
         </button>
         <ul id="dropdown-example" class="hidden py-2 space-y-2">
             <li>
-                <a href="{{ url('/admin/student-account') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Student</a>
+                <a href="{{ url('/admin/student-accounts') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Student</a>
             </li>
             <li>
-                <a href="{{ url('/admin/employee-account') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Employee</a>
+                <a href="{{ url('/admin/employee-accounts') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Employee</a>
             </li>
             <li>
-                <a href="{{ url('/admin/coordinator-account') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Guidance Coordinator</a>
+                <a href="{{ url('/admin/coordinator-accounts') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Guidance Coordinator</a>
             </li>
             <li>
-                <a href="{{ url('/admin/counselor-account') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Guidance Counselor</a>
+                <a href="{{ url('/admin/counselor-accounts') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Guidance Counselor</a>
             </li>
             <li>
-                <a href="{{ url('/admin/admin-account') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Admin</a>
+                <a href="{{ url('/admin/admin-accounts') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" onclick="event.stopPropagation()">Admin</a>
             </li>
         </ul>
     </li>

@@ -88,7 +88,6 @@
                                             @endif
                                         </select>
                                     </div>
-
                                     <div>
                                         <label for="program" class="block mb-1 text-sm font-medium text-gray-900">Program</label>
                                         <select id="program" name="program_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 truncate appearance-none pr-8">
@@ -96,7 +95,6 @@
                                         </select>
                                     </div>
                                     </div>
-
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                                         <div>
                                             <label for="contact_number" class="block mb-1 text-sm font-medium text-gray-900">Contact Number</label>
@@ -123,7 +121,6 @@
                                             Add new student
                                         </button>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
@@ -173,7 +170,7 @@
                         <tbody id="student-table-body">
                             @foreach($students as $index => $student)
                                 <tr class="border-b">
-                                    <td class="px-4 py-3 text-gray-700 whitespace-nowrap">{{ $index + 1 }}.</td>
+                                    <td scope="row" class="px-4 py-3 text-gray-700 whitespace-nowrap">{{ $index + 1 }}.</td>
                                     <td class="px-4 py-3 font-medium text-gray-700 whitespace-nowrap">{{ $student->id_number }}</td>
                                     <td class="px-4 py-3 text-gray-700 whitespace-nowrap">
                                         {{ $student->first_name }} 
@@ -212,9 +209,20 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div id="no-students-message" class="text-center font-serif text-gray-600 mt-6 hidden">No Student Found</div>
-                @else
-                    <p class="text-center font-serif mt-6">No students found.</p>
+                    <div id="no-students-message" class="text-center font-serif text-gray-600 mt-6 hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#B7B7B7" class="mx-auto mb-2">
+                            <path d="M280-80q-83 0-141.5-58.5T80-280q0-83 58.5-141.5T280-480q83 0 141.5 58.5T480-280q0 83-58.5 141.5T280-80Zm544-40L568-376q-12-13-25.5-26.5T516-428q38-24 61-64t23-88q0-75-52.5-127.5T420-760q-75 0-127.5 52.5T240-580q0 6 .5 11.5T242-557q-18 2-39.5 8T164-535q-2-11-3-22t-1-23q0-109 75.5-184.5T420-840q109 0 184.5 75.5T680-580q0 43-13.5 81.5T629-428l251 252-56 56Z"/>
+                        </svg>
+                        No students found.
+                    </div>
+                                    
+                    @else(isset($students) && count($students) == 0)
+                        <div class="text-center font-serif text-gray-600 mt-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#B7B7B7" class="mx-auto mb-2">
+                                <path d="M608-522 422-708q14-6 28.5-9t29.5-3q59 0 99.5 40.5T620-580q0 15-3 29.5t-9 28.5ZM234-276q51-39 114-61.5T480-360q18 0 34.5 1.5T549-354l-88-88q-47-6-80.5-39.5T341-562L227-676q-32 41-49.5 90.5T160-480q0 59 19.5 111t54.5 93Zm498-8q32-41 50-90.5T800-480q0-133-93.5-226.5T480-800q-56 0-105.5 18T284-732l448 448ZM480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q83 0 155.5 31.5t127 86q54.5 54.5 86 127T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-60Z"/>
+                            </svg>
+                            No student accounts added yet.
+                        </div>
                 @endif
             </div>
             <div class="flex py-4 justify-end mr-4">

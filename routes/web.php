@@ -6,21 +6,17 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\StudentAccountController;
 use App\Http\Controllers\EmployeeAccountController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CoordinatorAccountController;
+use App\Http\Controllers\CounselorAccountController;
+use App\Http\Controllers\AdminAccountController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\ProgramController;
 
 
 // Admin Routes
-Route::get('/admin/student-account', [StudentAccountController::class, 'index'])->name('admin.student_account');
+
 Route::get('/admin/signin', function () {return view('admin.signin');});
 Route::get('/admin/home', function () {return view('admin.home');});
-Route::get('/admin/employee-account', function () {return view('admin.employee_account');});
-Route::get('/admin/coordinator-account', function () {return view('admin.coordinator_account');});
-Route::get('/admin/counselor-account', function () {return view('admin.counselor_account');});
-Route::get('/admin/admin-account', function () {return view('admin.admin_account');});
-Route::get('/admin/school', function () {return view('admin.school');});
-Route::get('/admin/program', function () {return view('admin.program');});
 Route::get('/admin/backup', function () {return view('admin.backup');});
 
 
@@ -39,6 +35,27 @@ Route::prefix('admin')->group(function () {
     Route::post('/employee-accounts', [EmployeeAccountController::class, 'store'])->name('admin.employee_account.store');
 });
 
+//Coordinator Account Routes under Admin
+Route::prefix('admin')->group(function () {
+    Route::get('/coordinator-accounts', [CoordinatorAccountController::class, 'index'])->name('admin.coordinator_account');
+    Route::patch('/coordinator-accounts/{id}/status', [CoordinatorAccountController::class, 'updateStatus'])->name('admin.coordinator_account.update_status');
+    Route::post('/coordinator-accounts', [CoordinatorAccountController::class, 'store'])->name('admin.coordinator_account.store');
+});
+
+//Counselor Account Routes under Admin
+Route::prefix('admin')->group(function () {
+    Route::get('/counselor-accounts', [CounselorAccountController::class, 'index'])->name('admin.counselor_account');
+    Route::patch('/counselor-accounts/{id}/status', [CounselorAccountController::class, 'updateStatus'])->name('admin.counselor_account.update_status');
+    Route::post('/counselor-accounts', [CounselorAccountController::class, 'store'])->name('admin.counselor_account.store');
+});
+
+//Admin Account Routes under Admin
+Route::prefix('admin')->group(function () {
+    Route::get('/admin-accounts', [AdminAccountController::class, 'index'])->name('admin.admin_account');
+    Route::patch('/admin-accounts/{id}/status', [AdminAccountController::class, 'updateStatus'])->name('admin.admin_account.update_status');
+    Route::post('/admin-accounts', [AdminAccountController::class, 'store'])->name('admin.admin_account.store');
+});
+
 
 //School Routes under Admin
 Route::prefix('admin')->group(function () {
@@ -54,6 +71,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/program/store', [ProgramController::class, 'store'])->name('admin.program.store');
     Route::put('/program/{id}', [ProgramController::class, 'update'])->name('admin.program.update');
     Route::delete('/program/{id}', [ProgramController::class, 'destroy'])->name('admin.program.destroy');
+});
+
+// Settings Routes under Admin
+Route::prefix('admin')->group(function () {
+    Route::get('/settings', function () {return view('admin.settings');});
 });
 
 

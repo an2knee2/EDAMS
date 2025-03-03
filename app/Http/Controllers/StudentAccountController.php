@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
-use App\Models\Program; 
+use App\Models\School;
+use App\Models\Program;
+
+ 
 
 class StudentAccountController extends Controller
 {
     public function index()
     {
         $students = Student::all();
-        $schools = \App\Models\School::all(); 
+        $schools = School::all(); 
         return view('admin.student_account', compact('students', 'schools'));
     }
 
