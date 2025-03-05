@@ -20,10 +20,10 @@
         <div class="w-full bg-white rounded-lg shadow border border-gray-300 md:mt-0 sm:max-w-md xl:p-0">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 class="text-xl font-bold text-gray-900">
-                    Sign in to your account
+                    Log in to your account
                 </h1>
 
-                <form action="{{ route('student.authenticate') }}" method="POST">
+                <form method="POST" action="{{ route('authenticate') }}">
                     @csrf
 
                     <div>
@@ -57,14 +57,9 @@
                         <a href="#" class="mt-1 mb-3 ml-auto text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                     </div>
                 
-                    <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"> 
-                        Sign in
+                    <button type="submit" class="mt-6 w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"> 
+                        Log in
                     </button>
-
-                    <p class="text-sm font-light text-gray-700 mt-1">
-                        Don’t have an account yet? 
-                        <a href="signup" class="font-medium text-black hover:underline">Sign up here</a>
-                    </p>
                 </form>
             </div>
         </div>

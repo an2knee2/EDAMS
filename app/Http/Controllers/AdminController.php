@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function studentAccount()
+    public function index()
     {
-        $schools = School::all(); // Fetch all schools from DB
-        return view('admin.student_account', compact('schools'));
+        return view('admin.home');
     }
+
 }

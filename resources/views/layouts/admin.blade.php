@@ -26,16 +26,24 @@
         <div>
             <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                <img class="w-8 h-8 rounded-full" src="{{ asset('Profile.png') }}" alt="user photo">
             </button>
         </div>
         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
             <div class="px-4 py-3" role="none">
                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                    Example
+                    {{ Auth::guard('admin')->user()->first_name }}
+                    @if(Auth::guard('admin')->user()->middle_name) 
+                        {{ strtoupper(substr(Auth::guard('admin')->user()->middle_name, 0, 1)) }}.
+                    @endif 
+                    {{ Auth::guard('admin')->user()->last_name }}
+                    @if(Auth::guard('admin')->user()->ext_name) 
+                        , {{ Auth::guard('admin')->user()->ext_name }}
+                    @endif
+
                 </p>
                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                    example@gmail.com
+                    {{ Auth::guard('admin')->user()->email }}
                 </p>
             </div>
             <ul class="py-1" role="none">
