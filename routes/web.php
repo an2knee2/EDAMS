@@ -83,15 +83,17 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/backup', function () { return view('admin.backup'); });
 
     // Settings Routes
-    Route::get('/admin/settings', function () { return view('admin.settings'); });
+    Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::post('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+    Route::post('/admin/password/update', [AdminController::class, 'updatePassword'])->name('admin.password.update');
+    Route::post('/admin/deactivate', [AdminController::class, 'deactivate'])->name('admin.deactivate');
+    Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
 });
 
 // Student routes
 Route::middleware('auth:student')->prefix('student')->group(function () {
-    Route::get('/home', function () {
-        $student = Auth::guard('student')->user();
-        return view('student.home', ['name' => $student->fullname]);
-    })->name('student.home');
+    Route::get('/home', function () {$student = Auth::guard('student')->user();return view('student.home', ['name' => $student->fullname]);})->name('student.home');
     Route::get('/assessment', function () {return view('student.assessment');})->name('student.assessment');
     Route::post('/assessment-stored', [AssessmentController::class, 'store'])->name('student.assessments.store');
     Route::get('/history', function () {return view('student.history');})->name('student.history');
@@ -101,26 +103,17 @@ Route::middleware('auth:student')->prefix('student')->group(function () {
 
 // Employee routes
 Route::middleware('auth:employee')->prefix('employee')->group(function () {
-    Route::get('/home', function () {
-        $employee = Auth::guard('employee')->user();
-        return view('employee.home', ['name' => $employee->fullname]);
-    })->name('employee.home');
+    Route::get('/home', function () {$employee = Auth::guard('employee')->user();return view('employee.home', ['name' => $employee->fullname]);})->name('employee.home');
 });
 
 // Coordinator routes
 Route::middleware('auth:guidance_coordinator')->prefix('guidance_coordinator')->group(function () {
-    Route::get('/home', function () {
-        $coordinator = Auth::guard('guidance_coordinator')->user();
-        return view('guidance_coordinator.home', ['name' => $coordinator->fullname]);
-    })->name('guidance_coordinator.home');
+    Route::get('/home', function () {$coordinator = Auth::guard('guidance_coordinator')->user();return view('guidance_coordinator.home', ['name' => $coordinator->fullname]);})->name('guidance_coordinator.home');
 });
 
 // Counselor routes
 Route::middleware('auth:guidance_counselor')->prefix('guidance_counselor')->group(function () {
-    Route::get('/home', function () {
-        $counselor = Auth::guard('guidance_counselor')->user();
-        return view('guidance_counselor.home', ['name' => $counselor->fullname]);
-    })->name('guidance_counselor.home');
+    Route::get('/home', function () {$counselor = Auth::guard('guidance_counselor')->user();return view('guidance_counselor.home', ['name' => $counselor->fullname]);})->name('guidance_counselor.home');
 });
 
 

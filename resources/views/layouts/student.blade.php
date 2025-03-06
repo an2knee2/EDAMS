@@ -1,43 +1,62 @@
 @extends('layouts.components.main')
 
 @section('navbar')
-<div class="flex items-center justify-between">
-
-    <!-- Left Side: Sidebar Toggle -->
-    <div class="flex items-center">
-        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden">
-            <span class="sr-only">Open sidebar</span>
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FAFFFF">
-                <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
-            </svg>
-        </button>
+<div class="flex items-center justify-start rtl:justify-end">
+    <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+        <span class="sr-only">Open sidebar</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        </svg>
+    </button>
+    <div class="flex items-center ms-2 md:me-24">
+        <img src="{{ asset('EDAMS_logo.png') }}" class="h-12 me-2" alt="EDAMS Logo" />
+        <div class="flex flex-col items-start">
+            <span class="text-xl font-semibold sm:text-2xl dark:text-white font-mono tracking-wider">
+                EDAMS
+            </span>
+            <span class="text-xs xs:text-base font-mono tracking-tighter dark:text-gray-300">
+                Aware-Assist
+            </span>
+        </div>
     </div>
+</div>
 
-      <!-- Right Side: User Profile -->
-    <div class="flex items-center">
-        <div class="flex items-center ms-3">
-            <div>
-                <button type="button" class="flex text-sm" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#e8eaed">
-                    <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/>
-                </svg>
-                </button>
+<div class="flex items-center">
+    <div class="flex items-center ms-3">
+        <div>
+            <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                <span class="sr-only">Open user menu</span>
+                <img class="w-8 h-8 rounded-full" src="{{ asset('Profile.png') }}" alt="user photo">
+            </button>
+        </div>
+        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                    {{ Auth::guard('student')->user()->first_name }}
+                    @if(Auth::guard('student')->user()->middle_name) 
+                        {{ strtoupper(substr(Auth::guard('student')->user()->middle_name, 0, 1)) }}.
+                    @endif 
+                    {{ Auth::guard('student')->user()->last_name }}
+                    @if(Auth::guard('student')->user()->ext_name) 
+                        , {{ Auth::guard('student')->user()->ext_name }}
+                    @endif
+
+                </p>
+                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                    {{ Auth::guard('student')->user()->email }}
+                </p>
             </div>
-            
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-white-700 dark:divide-white-600" id="dropdown-user">
-                <div class="px-4 py-3" role="none">
-                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-white-300 dark:hover:bg-blue-100 dark:hover:text-black text-left" role="menuitem">Profile</a>
-                    <hr class="border-t border-gray-300 dark:border-white-600 w-full"></hr>
-                
-                    <!-- Logout Form -->
-                    <form action="#" method="POST" class="block">
+            <ul class="py-1" role="none">
+                <li>
+                    <a href="{{ url('/student/settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                </li>
+                <li>
+                    <form method="POST" action="{{ route('student.logout') }}">
                         @csrf
-                        <button type="submit" class="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-white-300 dark:hover:bg-blue-100 dark:hover:text-black text-left">
-                            Log out
-                        </button>
+                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Log out</button>
                     </form>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

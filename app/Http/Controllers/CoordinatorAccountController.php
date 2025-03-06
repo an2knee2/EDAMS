@@ -30,7 +30,7 @@ class CoordinatorAccountController extends Controller
         $coordinator->status = 'Activated';
         $coordinator->save();
 
-        return redirect()->route('admin.coordinator_account')->with('success', 'Coordinator added successfully.');
+        return redirect()->route('admin.coordinator_account')->with('success', 'A new coordinator account added successfully.');
     }
 
     public function updateStatus($id, Request $request)

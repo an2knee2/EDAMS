@@ -20,9 +20,15 @@ class EmployeeAccountController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'sex' => 'required',
-            'contact_number' => 'required',
+            'contact_number' => ['required', 'regex:/^09[0-9]{9}$/', 'numeric'],
             'email' => 'required|email|unique:employees,email',
             'password' => 'required|confirmed',
+        ], [
+            'id_number.unique' => 'The ID number is already taken.',
+            'contact_number.regex' => 'The contact number must be valid.',
+            'contact_number.numeric' => 'The contact number must be valid.',
+            'email.unique' => 'The email address is already taken.',
+            'password.confirmed' => 'The passwords did not match.',
         ]);
 
         Employee::create([
@@ -38,7 +44,7 @@ class EmployeeAccountController extends Controller
             'status' => 'Activated',
         ]);
 
-        return redirect()->route('admin.employee_account')->with('success', 'Employee added successfully.');
+        return redirect()->route('admin.employee_account')->with('success', 'A new employee account added successfully.');
     }
 
     public function updateStatus(Request $request, $id)

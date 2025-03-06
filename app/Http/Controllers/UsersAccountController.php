@@ -58,6 +58,9 @@ class UsersAccountController extends Controller
         }
 
         // If authentication fails, return with an error
-        return back()->withErrors(['email' => 'Invalid credentials.']);
+        return back()->withErrors([
+            'email' => 'The email or password is invalid.',
+            'password' => 'The email or password is invalid.'
+        ]);
     }
 }

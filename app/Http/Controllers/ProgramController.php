@@ -17,7 +17,7 @@ class ProgramController extends Controller
 
         Program::create($request->all());
 
-        return redirect()->route('admin.program')->with('success', 'Program added successfully.');
+        return redirect()->route('admin.program')->with('success', 'A new school is successfully added.');
     }
 
     public function index()
@@ -37,7 +37,7 @@ class ProgramController extends Controller
         $program = Program::findOrFail($id);
         $program->update($request->all());
 
-        return redirect()->route('admin.program')->with('success', 'Program updated successfully.');
+        return redirect()->route('admin.program')->with('update', 'A program is successfully updated.');
     }
 
     public function destroy($id)
@@ -45,6 +45,6 @@ class ProgramController extends Controller
         $program = Program::findOrFail($id);
         $program->delete();
 
-        return redirect()->route('admin.program')->with('success', 'Program deleted successfully.');
+        return redirect()->route('admin.program')->with('delete', 'A program is successfully deleted.');
     }
 }

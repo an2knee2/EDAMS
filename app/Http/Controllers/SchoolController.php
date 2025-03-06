@@ -25,7 +25,7 @@ class SchoolController extends Controller
             'abbreviation' => $request->abbreviation,
         ]);
 
-        return redirect()->route('admin.school')->with('success', 'School added successfully.');
+        return redirect()->route('admin.school')->with('success', 'A new school is successfully added.');
     }
 
     public function update(Request $request, $id)
@@ -41,7 +41,7 @@ class SchoolController extends Controller
             'abbreviation' => $request->abbreviation,
         ]);
 
-        return redirect()->route('admin.school')->with('success', 'School updated successfully.');
+        return redirect()->route('admin.school')->with('update', 'A school is successfully updated.');
     }
 
     public function destroy($id)
@@ -49,6 +49,6 @@ class SchoolController extends Controller
         $school = School::findOrFail($id);
         $school->delete();
 
-        return redirect()->route('admin.school')->with('success', 'School deleted successfully.');
+        return redirect()->route('admin.school')->with('delete', 'A school is successfully deleted.');
     }
 }

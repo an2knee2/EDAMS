@@ -34,7 +34,7 @@ class AdminAccountController extends Controller
             'status' => 'Activated',
         ]);
 
-        return redirect()->route('admin.admin_account')->with('success', 'Admin created successfully.');
+        return redirect()->route('admin.admin_account')->with('success', 'A new admin account added successfully.');
     }
 
     public function updateStatus($id, Request $request)

@@ -2,7 +2,24 @@
 
 @section('content')
 <section class="p-3 sm:p-5">
-    <div class="mx-auto max-w-screen-xl">
+    <div class="mx-auto max-w-screen-xl relative">
+        @if(session('success'))
+            <div id="toast-success" class="absolute inset-x-0 top-6 mx-auto flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-slate-200 rounded-lg shadow-sm z-50" role="alert">
+                <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                    </svg>
+                    <span class="sr-only">Check icon</span>
+                </div>
+                <div class="ms-3 text-sm font-normal">{{ session('success') }}</div>
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-slate-200 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#toast-success" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            </div>
+        @endif
         <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="w-full md:w-1/2">
@@ -183,10 +200,20 @@
                                 <div id="dropdown-{{ $counselor->id }}" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdown-button-{{ $counselor->id }}">
                                         <li>
-                                            <a class="block py-2 px-4 hover:bg-gray-100" onclick="updateStatus('{{ $counselor->id }}', 'Activated')">Activate</a>
+                                            <a class="py-2 px-4 hover:bg-gray-100 flex items-center" onclick="updateStatus('{{ $counselor->id }}', 'Activated')">
+                                                <svg class="w-5 h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-10.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                </svg>
+                                                Activate
+                                            </a>
                                         </li>
                                         <li>
-                                            <a class="block py-2 px-4 hover:bg-gray-100" onclick="updateStatus('{{ $counselor->id }}', 'Disabled')">Disable</a>
+                                            <a class="py-2 px-4 hover:bg-gray-100 flex items-center" onclick="updateStatus('{{ $counselor->id }}', 'Disabled')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#434343" class="inline mr-2">
+                                                    <path d="m339-288 141-141 141 141 51-51-141-141 141-141-51-51-141 141-141-141-51 51 141 141-141 141 51 51ZM480-96q-79 0-149-30t-122.5-82.5Q156-261 126-331T96-480q0-80 30-149.5t82.5-122Q261-804 331-834t149-30q80 0 149.5 30t122 82.5Q804-699 834-629.5T864-480q0 79-30 149t-82.5 122.5Q699-156 629.5-126T480-96Zm0-72q130 0 221-91t91-221q0-130-91-221t-221-91q-130 0-221 91t-91 221q0 130 91 221t221 91Zm0-312Z"/>
+                                                </svg>
+                                                Disable
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -231,6 +258,15 @@
 </section>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toastSuccess = document.getElementById('toast-success');
+        if (toastSuccess) {
+            setTimeout(() => {
+                toastSuccess.style.display = 'none';
+            }, 3000);
+        }
+    });
+
     function updateStatus(counselorId, status) {
         fetch("{{ url('/admin/counselor-accounts') }}/" + counselorId + "/status", {
             method: "PATCH",

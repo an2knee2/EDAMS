@@ -29,7 +29,7 @@ class CounselorAccountController extends Controller
         $counselor->status = 'Activated';
         $counselor->save();
 
-        return redirect()->route('admin.counselor_account')->with('success', 'Counselor added successfully.');
+        return redirect()->route('admin.counselor_account')->with('success', 'A new counselor account added successfully.');
     }
 
     public function updateStatus($id, Request $request)
