@@ -15,10 +15,11 @@ class AssessmentController extends Controller
         $request->validate([
             'answers' => 'required|array|size:21',
             'answers.*' => 'required|integer|min:0|max:3',
+            'total_score' => 'required|integer|min:0|max:63',
         ]);
 
         // Calculate total score
-        $totalScore = array_sum($request->answers);
+        $totalScore = $request->total_score;
 
         // Determine anxiety status
         $status = match (true) {
@@ -30,12 +31,15 @@ class AssessmentController extends Controller
         // Get authenticated student
         $student = Auth::guard('student')->user();
 
+        // Concatenate fullname
+        $fullname = trim("{$student->first_name} {$student->middle_name} {$student->last_name} {$student->extension_name}");
+
         // Store the assessment
         Assessment::create([
             'student_id' => $student->id,
-            'fullname' => $student->fullname,
-            'school_id' => $student->school,
-            'program_id' => $student->program,
+            'fullname' => $fullname,
+            'school_id' => $student->school_id,
+            'program_id' => $student->program_id,
             'score' => $totalScore,
             'status' => $status,
         ]);
@@ -46,5 +50,11 @@ class AssessmentController extends Controller
             'status' => $status,
             'success' => 'Assessment completed successfully.'
         ]);
+    }
+
+    public function inheritStudentData()
+    {
+        $student = Auth::guard('student')->user();
+        return response()->json($student);
     }
 }

@@ -3,90 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Models\School;
-use App\Models\Program;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 
-
 class StudentController extends Controller
 {
-    /**
-     * Show registration form
-     */
-    public function create() {
-        $schools = School::all();
-        return view('student.signup', compact('schools'));
-    }
-    
-    public function getProgramsBySchool(Request $request) {
-        $schoolId = $request->query('school_id');
-        $programs = Program::where('school_id', $schoolId)->get();
-        return response()->json($programs);
-    }
-    
-    /**
-     * Handle student registration
-     */
-    public function store(Request $request) {
-        $request->validate([
-            'fullname' => 'required|string|max:255',
-            'school_id' => 'required|exists:schools,id',
-            'program_id' => 'required|exists:programs,id',
-            'contact' => 'required|digits:11|unique:students,contact',
-            'email' => 'required|email|unique:students,email',
-            'password' => 'required|string|min:8|confirmed',
-        ], [
-            'contact.digits' => 'Please provide a valid contact number.',
-            'contact.unique' => 'This contact number is already in use.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.unique' => 'This email is already in use.',
-            'password.min' => 'The password must be at least 8 characters long.',
-            'password.confirmed' => 'The password confirmation does not match.',
-        ]);
-
-        Student::create([
-            'fullname' => $request->fullname,
-            'school_id' => $request->school_id,
-            'program_id' => $request->program_id,
-            'contact' => $request->contact,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-    
-        return redirect()->route('student.signin')->with('success', 'Account created. Please sign in.');
-    }
-    
-
-    /**
-     * Show sign-in form
-     */
-    public function signin()
+    public function updateProfile(Request $request)
     {
-        return view('student.assessment');
-    }
-    /**
-     * Handle student authentication
-     */
-    public function authenticate(Request $request)
-{
-    $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
-    ]);
-
-    if (Auth::guard('student')->attempt($credentials)) {
-        $request->session()->regenerate();
         $student = Auth::guard('student')->user();
-        return redirect()->route('student.home')->with('name', $student->fullname);
+        $student->update($request->only([
+            'first_name', 'middle_name', 'last_name', 'ext_name', 'sex', 'school_id', 'program_id', 'email', 'contact_number'
+        ]));
+
+        return redirect()->route('student.settings')->with('success', 'Profile updated successfully.');
     }
 
-    return back()->withErrors([
-        'email' => 'The email or password is invalid. Try again.',
-    ]);
-}
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed|min:8',
+        ]);
 
+        $student = Auth::guard('student')->user();
 
+        if (!Hash::check($request->current_password, $student->password)) {
+            return back()->withErrors(['current_password' => 'Current password is incorrect']);
+        }
+
+        $student->update(['password' => Hash::make($request->new_password)]);
+
+        return redirect()->route('student.settings')->with('success', 'Password updated successfully.');
+    }
+
+    public function deactivate(Request $request)
+    {
+        $student = Auth::guard('student')->user();
+        $student->update(['status' => 'deactivated']);
+
+        Auth::guard('student')->logout();
+
+        return redirect()->route('login')->with('success', 'Account deactivated successfully.');
+    }
 }

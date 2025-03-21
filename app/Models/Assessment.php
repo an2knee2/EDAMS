@@ -10,6 +10,11 @@ class Assessment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fullname', 'school_id', 'program_id', 'score', 'status',
+        'student_id', 'fullname', 'school_id', 'program_id', 'score', 'status',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }

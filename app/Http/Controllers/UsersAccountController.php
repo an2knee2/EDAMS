@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersAccountController extends Controller
 {
+    public function showLoginForm()
+    {
+        return view('login');
+    }
+
     public function authenticate(Request $request)
     {
         // Validate the request
@@ -25,31 +30,31 @@ class UsersAccountController extends Controller
         switch ($role) {
             case 'admin':
                 if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password])) {
-                    return redirect()->route('admin.home'); // Redirect to admin dashboard
+                    return redirect()->route('admin.home')->with('success', 'You logged in successfully.');
                 }
                 break;
 
             case 'student':
                 if (Auth::guard('student')->attempt(['email' => $email, 'password' => $password])) {
-                    return redirect()->route('student.home'); // Redirect to student dashboard
+                    return redirect()->route('student.home')->with('success', 'You logged in successfully.');
                 }
                 break;
 
             case 'employee':
                 if (Auth::guard('employee')->attempt(['email' => $email, 'password' => $password])) {
-                    return redirect()->route('employee.home'); // Redirect to employee dashboard
+                    return redirect()->route('employee.home')->with('success', 'You logged in successfully.');
                 }
                 break;
 
             case 'guidance_coordinator':
-                if (Auth::guard('guidance_coordinator')->attempt(['email' => $email, 'password' => $password])) {
-                    return redirect()->route('guidance_coordinator.home'); // Redirect to guidance coordinator dashboard
+                if (Auth::guard('coordinator')->attempt(['email' => $email, 'password' => $password])) {
+                    return redirect()->route('coordinator.home')->with('success', 'You logged in successfully.');
                 }
                 break;
-
+                
             case 'guidance_counselor':
-                if (Auth::guard('guidance_counselor')->attempt(['email' => $email, 'password' => $password])) {
-                    return redirect()->route('guidance_counselor.home'); // Redirect to guidance counselor dashboard
+                if (Auth::guard($role)->attempt(['email' => $email, 'password' => $password])) {
+                    return redirect()->route('counselor.home')->with('success', 'You logged in successfully.');
                 }
                 break;
 
@@ -62,5 +67,21 @@ class UsersAccountController extends Controller
             'email' => 'The email or password is invalid.',
             'password' => 'The email or password is invalid.'
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        // Get the current guard (role)
+        $guard = Auth::getDefaultDriver();
+
+        // Logout the user
+        Auth::guard($guard)->logout();
+
+        // Invalidate the session and regenerate the token
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Redirect to the login page with a success message
+        return redirect('/login')->with('success', 'You logged out successfully.');
     }
 }

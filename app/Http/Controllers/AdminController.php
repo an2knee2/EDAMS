@@ -13,6 +13,8 @@ class AdminController extends Controller
         return view('admin.home');
     }
 
+    
+
     public function updateProfile(Request $request)
     {
         $admin = Auth::guard('admin')->user();
@@ -57,7 +59,7 @@ class AdminController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('success', 'Logged out successfully.');
+        return redirect('/login')->with('success', 'You logged out successfully.');
     }
 
     public function settings()

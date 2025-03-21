@@ -11,6 +11,16 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-100">
+
+@if(session('success'))
+    <div id="toast-simple" class="mt-16 absolute top-4 left-1/2 transform -translate-x-1/2 flex items-center mx-4 max-w-xs p-4 text-gray-500 bg-slate-300 rounded-lg shadow-sm" role="alert">
+        <svg class="w-5 h-5 text-blue-600 rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 17 8 2L9 1 1 19l8-2Zm0 0V9"/>
+        </svg>
+        <div class="ml-3 text-sm font-normal">{{ session('success') }}</div>
+    </div>
+@endif
+
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div class="flex items-center mb-6 text-2xl font-semibold font-serif">
             <img class="w-8 h-8 mr-2" src="{{ asset('EDAMS_logo.png') }}" alt="EDAMS Logo">
@@ -72,6 +82,10 @@
     </div>
 
     <script>
+        setTimeout(() => {
+        document.getElementById('toast-simple').style.display = 'none';
+        }, 3000);
+
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';}

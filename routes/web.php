@@ -14,10 +14,12 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HistoryController;
 
-// Sign-in route
-Route::get('/login', function () { return view('login'); });
-Route::post('/authenticate', [UsersAccountController::class, 'authenticate'])->name('authenticate');
+// All Users login and logout route
+Route::get('/login', [UsersAccountController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [UsersAccountController::class, 'authenticate'])->name('authenticate');
+Route::post('/logout', [UsersAccountController::class, 'logout'])->name('logout');
 
 // Admin Home Route
 Route::middleware('auth:admin')->group(function () {
@@ -96,9 +98,14 @@ Route::middleware('auth:student')->prefix('student')->group(function () {
     Route::get('/home', function () {$student = Auth::guard('student')->user();return view('student.home', ['name' => $student->fullname]);})->name('student.home');
     Route::get('/assessment', function () {return view('student.assessment');})->name('student.assessment');
     Route::post('/assessment-stored', [AssessmentController::class, 'store'])->name('student.assessments.store');
-    Route::get('/history', function () {return view('student.history');})->name('student.history');
+    Route::get('/history', [HistoryController::class, 'index'])->name('student.history');
     Route::get('/contact', function () {return view('student.contact');})->name('student.contact');
     Route::get('/result', function () {return view('student.result');})->name('student.result');
+    Route::get('/settings', function () {return view('student.settings');})->name('student.settings');
+    Route::post('/profile/update', [StudentController::class, 'updateProfile'])->name('student.profile.update');
+    Route::post('/password/update', [StudentController::class, 'updatePassword'])->name('student.password.update');
+    Route::post('/deactivate', [StudentController::class, 'deactivate'])->name('student.deactivate');
+    Route::post('/logout', [UsersAccountController::class, 'logout'])->name('student.logout');
 });
 
 // Employee routes

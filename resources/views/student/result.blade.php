@@ -1,22 +1,35 @@
 @extends('layouts.student')
 
 @section('content')
-<div class="container mx-auto mt-20 text-center">
-    <h3 class="text-4xl font-bold mb-6">Assessment Result</h3>
 
-    @if(session('success'))
-        <div class="bg-green-100 p-6 rounded shadow-md">
-            <p class="text-xl mb-4">{{ session('success') }}</p>
-        </div>
-    @endif
+@php
+    $status = session('status');
+    $score = session('score');
+    $color = 'text-red-500'; // Default for Severe Anxiety
+    $message = "It's advisable to seek professional help or talk to someone you trust immediately.";
 
-    <div class="bg-blue-100 p-6 rounded shadow-md">
-        <p class="text-xl mb-4">Total Score: <strong>{{ session('score') }}</strong></p>
-        <p class="text-xl mb-4">Anxiety Status: <strong>{{ session('status') }}</strong></p>
+    if ($status == 'Moderate Anxiety') {
+        $color = 'text-orange-500';
+        $message = "Consider some relaxation techniques or talking it out with someone.";
+    } elseif ($status == 'Low Anxiety') {
+        $color = 'text-green-500';
+        $message = "You're in a good place but remember to maintain your self-care routines.";
+    }
+@endphp
+
+<div class="flex justify-center items-center mt-32 h-full w-full">
+    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 text-center">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black">SCORE</h5>
+        <p class="mb-2 text-2xl font-bold tracking-tight {{ $color }}">
+            {{ $score }}
+        </p>
+        <p class="font-normal text-gray-700 text-justify">
+            You are experiencing <strong>{{ $status }}</strong>. {{ $message }}
+        </p>
+        <a href="{{ route('student.assessment') }}" class="mt-4 inline-block px-6 py-2 text-sm font-medium leading-6 text-center text-white bg-blue-500 hover:bg-blue-600 rounded-full shadow-sm">
+            Back to Assessment
+        </a>
     </div>
-
-    <a href="{{ route('student.assessment') }}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
-        Take Another Assessment
-    </a>
 </div>
+
 @endsection

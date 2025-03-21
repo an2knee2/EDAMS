@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Student extends Model
+class Student extends Authenticatable
 {
     use HasFactory;
 
@@ -23,4 +23,9 @@ class Student extends Model
         'password',
         'status',
     ];
+
+    public function assessments()
+    {
+        return $this->hasMany(Assessment::class);
+    }
 }
