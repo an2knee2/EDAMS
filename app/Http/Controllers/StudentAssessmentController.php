@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Student;
-use App\Models\Assessment;
+use App\Models\StudentAssessment;
 
-class AssessmentController extends Controller
+class StudentAssessmentController extends Controller
 {
     public function store(Request $request)
     {
@@ -28,14 +27,14 @@ class AssessmentController extends Controller
             default => 'Severe Anxiety',
         };
 
-        // Get authenticated student
+        // Get the authenticated student
         $student = Auth::guard('student')->user();
 
         // Concatenate fullname
         $fullname = trim("{$student->first_name} {$student->middle_name} {$student->last_name} {$student->extension_name}");
 
         // Store the assessment
-        Assessment::create([
+        StudentAssessment::create([
             'student_id' => $student->id,
             'fullname' => $fullname,
             'school_id' => $student->school_id,
@@ -52,9 +51,11 @@ class AssessmentController extends Controller
         ]);
     }
 
-    public function inheritStudentData()
+    public function inheritUserData()
     {
+        // Get the authenticated student
         $student = Auth::guard('student')->user();
+
         return response()->json($student);
     }
 }

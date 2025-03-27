@@ -18,6 +18,21 @@ return [
             'provider' => 'students',
         ],
 
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employees',
+        ],
+
+        'coordinator' => [
+            'driver' => 'session',
+            'provider' => 'coordinators',
+        ],
+
+        'counselor' => [
+            'driver' => 'session',
+            'provider' => 'counselors',
+        ],
+
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -33,6 +48,21 @@ return [
         'students' => [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,
+        ],
+
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employee::class,
+        ],
+
+        'coordinators' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Coordinator::class,
+        ],
+
+        'counselors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Counselor::class,
         ],
 
         'admins' => [

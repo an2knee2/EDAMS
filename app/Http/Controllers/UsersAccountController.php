@@ -46,14 +46,14 @@ class UsersAccountController extends Controller
                 }
                 break;
 
-            case 'guidance_coordinator':
+            case 'coordinator':
                 if (Auth::guard('coordinator')->attempt(['email' => $email, 'password' => $password])) {
                     return redirect()->route('coordinator.home')->with('success', 'You logged in successfully.');
                 }
                 break;
                 
-            case 'guidance_counselor':
-                if (Auth::guard($role)->attempt(['email' => $email, 'password' => $password])) {
+            case 'counselor':
+                if (Auth::guard('counselor')->attempt(['email' => $email, 'password' => $password])) {
                     return redirect()->route('counselor.home')->with('success', 'You logged in successfully.');
                 }
                 break;

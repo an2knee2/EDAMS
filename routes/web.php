@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersAccountController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\StudentAccountController;
 use App\Http\Controllers\EmployeeAccountController;
 use App\Http\Controllers\CoordinatorAccountController;
@@ -12,9 +12,13 @@ use App\Http\Controllers\CounselorAccountController;
 use App\Http\Controllers\AdminAccountController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\ProgramController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\EmployeeAssessmentController;
+use App\Http\Controllers\CounselorController;
+use App\Http\Controllers\EmployeeHistoryController;
+use App\Http\Controllers\StudentAssessmentController;
+use App\Http\Controllers\StudentHistoryController;
+
 
 // All Users login and logout route
 Route::get('/login', [UsersAccountController::class, 'showLoginForm'])->name('login');
@@ -81,36 +85,49 @@ Route::middleware('auth:admin')->group(function () {
         Route::delete('/program/{id}', [ProgramController::class, 'destroy'])->name('admin.program.destroy');
     });
 
-    // Admin Backup Route
-    Route::get('/admin/backup', function () { return view('admin.backup'); });
-
     // Settings Routes
     Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
     Route::post('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
     Route::post('/admin/password/update', [AdminController::class, 'updatePassword'])->name('admin.password.update');
     Route::post('/admin/deactivate', [AdminController::class, 'deactivate'])->name('admin.deactivate');
-    Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    
+    Route::post('/logout', [UsersAccountController::class, 'logout'])->name('admin.logout');
 
 });
 
 // Student routes
 Route::middleware('auth:student')->prefix('student')->group(function () {
     Route::get('/home', function () {$student = Auth::guard('student')->user();return view('student.home', ['name' => $student->fullname]);})->name('student.home');
+
     Route::get('/assessment', function () {return view('student.assessment');})->name('student.assessment');
-    Route::post('/assessment-stored', [AssessmentController::class, 'store'])->name('student.assessments.store');
-    Route::get('/history', [HistoryController::class, 'index'])->name('student.history');
-    Route::get('/contact', function () {return view('student.contact');})->name('student.contact');
+    Route::post('/assessment-stored', [StudentAssessmentController::class, 'store'])->name('student.assessments.store');
     Route::get('/result', function () {return view('student.result');})->name('student.result');
-    Route::get('/settings', function () {return view('student.settings');})->name('student.settings');
+
+    Route::get('/history', [StudentHistoryController::class, 'index'])->name('student.history');
+    
+    Route::get('/settings', [StudentController::class, 'showSettings'])->name('student.settings');
     Route::post('/profile/update', [StudentController::class, 'updateProfile'])->name('student.profile.update');
+    Route::get('/programs-by-school', [StudentController::class, 'getProgramsBySchool'])->name('student.programs_by_school');
     Route::post('/password/update', [StudentController::class, 'updatePassword'])->name('student.password.update');
-    Route::post('/deactivate', [StudentController::class, 'deactivate'])->name('student.deactivate');
-    Route::post('/logout', [UsersAccountController::class, 'logout'])->name('student.logout');
+    
+    Route::post('/logout', [UsersAccountController::class, 'logout'])->name('student.logout');   
 });
 
 // Employee routes
 Route::middleware('auth:employee')->prefix('employee')->group(function () {
     Route::get('/home', function () {$employee = Auth::guard('employee')->user();return view('employee.home', ['name' => $employee->fullname]);})->name('employee.home');
+
+    Route::get('/assessment', function () {return view('employee.assessment');})->name('employee.assessment');
+    Route::post('/assessment-stored', [EmployeeAssessmentController::class, 'store'])->name('employee.assessments.store');
+    Route::get('/result', function () {return view('employee.result');})->name('employee.result');
+
+    Route::get('/history', [EmployeeHistoryController::class, 'index'])->name('employee.history');
+    
+    Route::get('/settings', [EmployeeController::class, 'showSettings'])->name('employee.settings');
+    Route::post('/profile/update', [EmployeeController::class, 'updateProfile'])->name('employee.profile.update');
+    Route::post('/password/update', [EmployeeController::class, 'updatePassword'])->name('employee.password.update');
+    
+    Route::post('/logout', [UsersAccountController::class, 'logout'])->name('employee.logout');   
 });
 
 // Coordinator routes
@@ -119,8 +136,16 @@ Route::middleware('auth:guidance_coordinator')->prefix('guidance_coordinator')->
 });
 
 // Counselor routes
-Route::middleware('auth:guidance_counselor')->prefix('guidance_counselor')->group(function () {
-    Route::get('/home', function () {$counselor = Auth::guard('guidance_counselor')->user();return view('guidance_counselor.home', ['name' => $counselor->fullname]);})->name('guidance_counselor.home');
+Route::middleware('auth:counselor')->prefix('counselor')->group(function () {
+    Route::get('/home', function () {$counselor = Auth::guard('counselor')->user();return view('counselor.home', ['name' => $counselor->fullname]);})->name('counselor.home');
+
+    Route::get('/student-anxiety-data', [CounselorController::class, ])->name('counselor.student_data');
+
+    Route::get('/employee-anxiety-data', [CounselorController::class, ])->name('counselor.employee_data');
+
+    Route::get('/settings', [CounselorController::class, 'showSettings'])->name('counselor.settings');
+
+    Route::post('/logout', [UsersAccountController::class, 'logout'])->name('counselor.logout');
 });
 
 

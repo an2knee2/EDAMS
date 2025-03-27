@@ -26,6 +26,23 @@ class Student extends Authenticatable
 
     public function assessments()
     {
-        return $this->hasMany(Assessment::class);
+        return $this->hasMany(StudentAssessment::class);
+    }
+
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id');
+    }
+
+    public static function getAllSchoolsAndPrograms()
+    {
+        $schools = School::all();
+        $programs = Program::all();
+        return compact('schools', 'programs');
     }
 }

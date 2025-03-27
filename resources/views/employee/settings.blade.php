@@ -1,4 +1,4 @@
-@extends('layouts.student')
+@extends('layouts.employee')
 
 @section('content')
     <main class="px-10 py-5 mx-auto my-0 bg-white max-w-[1440px] max-md:p-4 relative">
@@ -24,55 +24,39 @@
             <!-- Card 1: Profile Information -->
             <div class="bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Profile Information</h2>
-                <form class="space-y-4" id="profile-form" method="POST" action="{{ route('student.profile.update') }}">
+                <form class="space-y-4" id="profile-form" method="POST" action="{{ route('employee.profile.update') }}">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                            <input type="text" name="first_name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('student')->user()->first_name }}" disabled>
+                            <input type="text" name="first_name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('employee')->user()->first_name }}" disabled>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Middle Name</label>
-                            <input type="text" name="middle_name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('student')->user()->middle_name }}" disabled>
+                            <input type="text" name="middle_name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('employee')->user()->middle_name }}" disabled>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                            <input type="text" name="last_name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('student')->user()->last_name }}" disabled>
+                            <input type="text" name="last_name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('employee')->user()->last_name }}" disabled>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Extension Name</label>
-                            <input type="text" name="extension_name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('student')->user()->ext_name }}" disabled>
+                            <input type="text" name="extension_name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('employee')->user()->ext_name }}" disabled>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Sex</label>
                             <select name="sex" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" disabled>
-                                <option value="Female" {{ Auth::guard('student')->user()->sex == 'Female' ? 'selected' : '' }}>Female</option>
-                                <option value="Male" {{ Auth::guard('student')->user()->sex == 'Male' ? 'selected' : '' }}>Male</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">School</label>
-                            <select name="school_id" id="school_id" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" disabled>
-                                @foreach($data['schools'] as $school)
-                                    <option value="{{ $school->id }}" {{ $student->school_id == $school->id ? 'selected' : '' }}>{{ $school->school_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Program</label>
-                            <select name="program_id" id="program_id" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" disabled>
-                                @foreach($data['programs'] as $program)
-                                    <option value="{{ $program->id }}" {{ $student->program_id == $program->id ? 'selected' : '' }}>{{ $program->program_name }}</option>
-                                @endforeach
+                                <option value="Female" {{ Auth::guard('employee')->user()->sex == 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Male" {{ Auth::guard('employee')->user()->sex == 'Male' ? 'selected' : '' }}>Male</option>
                             </select>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                            <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('student')->user()->email }}" disabled>
+                            <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('employee')->user()->email }}" disabled>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
-                            <input type="contact_number" name="contact_number" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('student')->user()->contact_number}}" disabled>
+                            <input type="contact_number" name="contact_number" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" value="{{ Auth::guard('employee')->user()->contact_number}}" disabled>
                         </div>
                     </div>
                     <button type="button" id="edit-profile-btn" class="mt-4 w-full md:w-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
@@ -86,7 +70,7 @@
 
             <div class="bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Change Password</h2>
-                <form class="space-y-4" id="password-form" method="POST" action="{{ route('student.password.update') }}">
+                <form class="space-y-4" id="password-form" method="POST" action="{{ route('employee.password.update') }}">
                     @csrf
                     <div class="space-y-4">
                         <div>
@@ -143,22 +127,6 @@
             inputs.forEach(input => input.disabled = false);
             this.classList.add('hidden');
             document.getElementById('save-profile-btn').classList.remove('hidden');
-        });
-
-        document.getElementById('school_id').addEventListener('change', function() {
-            const schoolId = this.value;
-            fetch(`/student/programs-by-school?school_id=${schoolId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const programSelect = document.getElementById('program_id');
-                    programSelect.innerHTML = '';
-                    data.forEach(program => {
-                        const option = document.createElement('option');
-                        option.value = program.id;
-                        option.textContent = program.program_name;
-                        programSelect.appendChild(option);
-                    });
-                });
         });
 
         document.getElementById('edit-password-btn').addEventListener('click', function() {

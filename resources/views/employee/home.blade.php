@@ -1,4 +1,4 @@
-@extends('layouts.student')
+@extends('layouts.employee')
 
 @section('content')
 
@@ -106,6 +106,6 @@
     document.getElementById('toast-simple').style.display = 'none';
     }, 3000);
 </script>
-
+ 
 @endsection
 

@@ -32,26 +32,26 @@
         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
             <div class="px-4 py-3" role="none">
                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                    {{ Auth::guard('admin')->user()->first_name }}
-                    @if(Auth::guard('admin')->user()->middle_name) 
-                        {{ strtoupper(substr(Auth::guard('admin')->user()->middle_name, 0, 1)) }}.
+                    {{ Auth::guard('counselor')->user()->first_name }}
+                    @if(Auth::guard('counselor')->user()->middle_name) 
+                        {{ strtoupper(substr(Auth::guard('counselor')->user()->middle_name, 0, 1)) }}.
                     @endif 
-                    {{ Auth::guard('admin')->user()->last_name }}
-                    @if(Auth::guard('admin')->user()->ext_name) 
-                        , {{ Auth::guard('admin')->user()->ext_name }}
+                    {{ Auth::guard('counselor')->user()->last_name }}
+                    @if(Auth::guard('counselor')->user()->ext_name) 
+                        , {{ Auth::guard('counselor')->user()->ext_name }}
                     @endif
 
                 </p>
                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                    {{ Auth::guard('admin')->user()->email }}
+                    {{ Auth::guard('counselor')->user()->email }}
                 </p>
             </div>
             <ul class="py-1" role="none">
                 <li>
-                    <a href="{{ route('admin.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                    <a href="{{ route('counselor.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
                 </li>
                 <li>
-                    <form method="POST" action="{{ route('admin.logout') }}">
+                    <form method="POST" action="{{ route('counselor.logout') }}">
                         @csrf
                         <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Log out</button>
                     </form>
@@ -65,7 +65,7 @@
 @section('sidebar')
 <ul class="space-y-2 font-medium sm:p-2">
     <li>
-        <a href="{{ url('/admin/home') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+        <a href="{{ url('/counselor/home') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#B7B7B7">
                 <path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/>
             </svg>
@@ -84,37 +84,12 @@
         </button>
         <ul id="dropdown-example" class="hidden py-2 space-y-2">
             <li>
-                <a href="{{ url('/admin/student-accounts') }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-700" onclick="event.stopPropagation()">Student</a>
+                <a href="{{ url('/counselor/student-anxiety-data') }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-700" onclick="event.stopPropagation()">Student</a>
             </li>
             <li>
-                <a href="{{ url('/admin/employee-accounts') }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-700" onclick="event.stopPropagation()">Employee</a>
-            </li>
-            <li>
-                <a href="{{ url('/admin/coordinator-accounts') }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-700" onclick="event.stopPropagation()">Guidance Coordinator</a>
-            </li>
-            <li>
-                <a href="{{ url('/admin/counselor-accounts') }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-700" onclick="event.stopPropagation()">Guidance Counselor</a>
-            </li>
-            <li>
-                <a href="{{ url('/admin/admin-accounts') }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-700" onclick="event.stopPropagation()">Admin</a>
+                <a href="{{ url('/counselor/employee-anxiety-data') }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-700" onclick="event.stopPropagation()">Employee</a>
             </li>
         </ul>
-    </li>
-    <li>
-        <a href="{{ url('/admin/school') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#B7B7B7">
-                <path d="M120-120v-560h160v-160h400v320h160v400H520v-160h-80v160H120Zm80-80h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 320h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 480h80v-80h-80v80Zm0-160h80v-80h-80v80Z"/>
-            </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap truncate">School</span>
-        </a>
-    </li>
-    <li>
-        <a href="{{ url('/admin/program') }}" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#B7B7B7">
-                <path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z"/>
-            </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap truncate">Program</span>
-        </a>
     </li>
 </ul>
 @endsection
